@@ -82,6 +82,29 @@ def login():
         return response, 200
     return jsonify({'error': 'Invalid credentials'}), 401
 
+@auth_bp.route('/reset-password', methods=['POST'])
+def reset_password():
+    data = request.get_json()
+    email = data.get('email')
+    new_password = data.get('newPassword')
+
+    if not email or not new_password:
+        return jsonify({'error': 'Missing email or new password'}), 400
+
+    conn = get_db()
+    user = conn.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
+
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    hashed_password = generate_password_hash(new_password)
+    conn.execute('UPDATE users SET password = ? WHERE email = ?', (hashed_password, email))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'message': 'Password successfully updated'}), 200
+
+
 @auth_bp.route('/me', methods=['GET'])
 @jwt_required()
 def get_current_user():
