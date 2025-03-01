@@ -63,9 +63,6 @@ def create_app():
                 
             prediction, confidence = predict(data['answers'])
             app.logger.info(f"Prediction: {prediction}, Confidence: {confidence}")  # Log prediction results
-
-            #app.logger.info(f"Prediction: {prediction}, Confidence: {confidence}")  # Log prediction results
-
             
             if prediction is None:
                 return jsonify({"error": "Prediction failed"}), 500
@@ -73,7 +70,7 @@ def create_app():
             return jsonify({
                 'diagnosis': prediction,
                 'confidence': confidence,
-                'recommendations': get_recommendations(prediction)
+                #'recommendations': get_recommendations(prediction)
             })
             
         except Exception as e:
