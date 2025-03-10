@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.preprocessing import LabelEncoder
 import joblib
 import os
@@ -12,7 +12,7 @@ logger = logging.getLogger('ModelTraining')
 
 try:
     # Load the dataset
-    data_path =r'C:\mental-health-app\server\model\Mental disorder symptoms.csv'
+    data_path = r'C:\mental-health-app\server\model\Mental disorder symptoms.csv'
 
     data = pd.read_csv(data_path)
     logger.info("Dataset loaded successfully.")
@@ -26,7 +26,12 @@ try:
 
     # Keep features with significant correlation (e.g., |correlation| > 0.1)
     significant_features = target_correlation[target_correlation > 0.1].index.tolist()
-    features = ["close.friend","repetitive.behaviour","introvert","hallucinations","breathing.rapidly","popping.up.stressful.memory","anger","feeling.negative","having.nightmares","increased.energy","sweating","weight.gain","having.trouble.with.work","feeling.tired","suicidal.thought"]
+    features = [
+        "close.friend","repetitive.behaviour","introvert","hallucinations",
+        "breathing.rapidly","popping.up.stressful.memory","anger","feeling.negative",
+        "increased.energy","weight.gain",
+        "having.trouble.with.work","feeling.tired","suicidal.thought"
+    ]
 
     # Split the dataset into features and target
     X = data[features]
@@ -36,7 +41,12 @@ try:
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Initialize the model
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model = GradientBoostingClassifier(
+        n_estimators=100,
+        learning_rate=0.1,
+        max_depth=3,
+        random_state=42
+    )
 
     # Train the model
     model.fit(X_train, y_train)
