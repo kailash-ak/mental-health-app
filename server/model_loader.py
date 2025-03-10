@@ -8,29 +8,30 @@ label_encoder = joblib.load('model/label_encoder.pkl')
 # Function to make predictions
 def predict(answers_dict):
     try:
-        expected_features=[
-
+        expected_features = [
             'close.friend', 'repetitive.behaviour', 'introvert', 
             'hallucinations', 'breathing.rapidly', 'anger',
             'popping.up.stressful.memory', 'feeling.negative', 
-            'having.nightmares', 'increased.energy', 'sweating',
-            'weight.gain', 'having.trouble.with.work', 'feeling.tired',
+            'increased.energy', 'weight.gain',
+            'having.trouble.with.work', 'feeling.tired',
             'suicidal.thought'
         ]
         
         # Log the incoming answers_dict
         logging.info(f"Received answers: {answers_dict}")  # Log the incoming answers
 
+        # Ensure all expected features are present
+        for feature in expected_features:
+            if feature not in answers_dict:
+                raise ValueError(f"Missing required feature: {feature}")
 
         answers_list = [answers_dict[feature] for feature in expected_features]
         
         # Process the answers (assuming it's a list of numerical values for features)
         prediction = model.predict([answers_list])  # Make prediction
 
-        
         # Log the prediction results
         logging.info(f"Prediction: {prediction}")  # Log the prediction result
-
 
         # Convert the numeric prediction to the corresponding label (disorder name)
         prediction_label = label_encoder.inverse_transform(prediction)
