@@ -113,7 +113,7 @@ export default function Problem() {
   };
 
   const getButtonColorClass = (isSelected, buttonType) => {
-    if (buttonType === 'yes' || buttonType=='no' ||buttonType === 'low' || buttonType === 'low_group') {
+    if (buttonType === 'yes' || buttonType === 'no' || buttonType === 'low' || buttonType === 'low_group') {
       return isSelected ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-blue-50 text-blue-800 hover:bg-blue-100';
     } else if (buttonType === 'high_group') {
       return isSelected ? 'bg-amber-600 hover:bg-amber-700 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100';
@@ -173,35 +173,35 @@ export default function Problem() {
     if (type === 'hopelessness') {
       return (
         <div className="grid grid-cols-2 gap-4">
-          <button 
-            onClick={() => handleAnswer('low_group')}
-            disabled={isSubmitting}
-            className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 0, 'low_group')}`}
-          >
-            Never
-          </button>
-          <button 
-            onClick={() => handleAnswer('low_group')}
-            disabled={isSubmitting}
-            className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 0, 'low_group')}`}
-          >
-            Occasionally
-          </button>
-          <button 
-            onClick={() => handleAnswer('high_group')}
-            disabled={isSubmitting}
-            className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 1, 'high_group')}`}
-          >
-            Often
-          </button>
-          <button
-            onClick={() => handleAnswer('high_group')}
-            disabled={isSubmitting}
-            className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 1, 'always')}`}
-          >
-            Always
-          </button>
-        </div>
+        <button 
+          onClick={() => handleAnswer('low_group')}
+          disabled={isSubmitting}
+          className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 0, 'low_group')}`}
+        >
+          Never
+        </button>
+        <button 
+          onClick={() => handleAnswer('medium_group')}
+          disabled={isSubmitting}
+          className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 0, 'medium_group')}`}
+        >
+          Occasionally
+        </button>
+        <button 
+          onClick={() => handleAnswer('high_group')}
+          disabled={isSubmitting}
+          className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 1, 'high_group')}`}
+        >
+          Often
+        </button>
+        <button
+          onClick={() => handleAnswer('always')}
+          disabled={isSubmitting}
+          className={`py-3 px-6 rounded-xl font-medium transition-all duration-300 transform hover:scale-102 shadow-sm ${getButtonColorClass(currentAnswer === 1, 'always')}`}
+        >
+          Always
+        </button>
+      </div>
       );
     }
   };
